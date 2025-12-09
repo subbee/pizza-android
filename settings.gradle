@@ -20,5 +20,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "PizzApp"
-include(":app")
- 
+include ':app'

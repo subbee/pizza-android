@@ -8,7 +8,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -18,6 +20,10 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+
+    private RecyclerView pizzaRecyclerView;
+    private PizzaAdapter pizzaAdapter;
+    private List<Pizza> pizzaList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +36,10 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        // Példa a bejelentkezés használatára
-        // loginUser("teszt@teszt.com", "password");
+        pizzaRecyclerView = findViewById(R.id.pizza_recycler_view);
+        pizzaAdapter = new PizzaAdapter(pizzaList);
+        pizzaRecyclerView.setAdapter(pizzaAdapter);
 
-        // Pizzák lekérdezésének tesztelése
         getPizzas();
     }
 
@@ -46,9 +52,9 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(Call<List<Pizza>> call, Response<List<Pizza>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Log.d(TAG, "Sikeres pizza lekérdezés!");
-                    for (Pizza pizza : response.body()) {
-                        Log.d(TAG, "Pizza: " + pizza.getNev());
-                    }
+                    pizzaList.clear();
+                    pizzaList.addAll(response.body());
+                    pizzaAdapter.notifyDataSetChanged();
                 } else {
                     Log.e(TAG, "Sikertelen pizza lekérdezés: " + response.code());
                 }
@@ -56,30 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<Pizza>> call, Throwable t) {
-                Log.e(TAG, "Hiba a hálózati kérés során", t);
-            }
-        });
-    }
-
-    private void loginUser(String email, String password) {
-        PizzaApi pizzaApi = ApiClient.getClient().create(PizzaApi.class);
-        LoginRequest loginRequest = new LoginRequest(email, password);
-
-        Call<AuthResponse> call = pizzaApi.login(loginRequest);
-
-        call.enqueue(new Callback<AuthResponse>() {
-            @Override
-            public void onResponse(Call<AuthResponse> call, Response<AuthResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "Sikeres bejelentkezés! Token: " + response.body().getToken());
-                    // Itt lehetne menteni a tokent és tovább navigálni a felhasználót
-                } else {
-                    Log.e(TAG, "Sikertelen bejelentkezés: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<AuthResponse> call, Throwable t) {
                 Log.e(TAG, "Hiba a hálózati kérés során", t);
             }
         });

@@ -33,6 +33,9 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     public void onBindViewHolder(@NonNull PizzaViewHolder holder, int position) {
         Pizza pizza = pizzaList.get(position);
         holder.pizzaName.setText(pizza.getNev());
+        holder.price.setText(pizza.getAr());
+        holder.vegetarianus.setText(pizza.getVegetarianus());
+
         Log.d("PizzaAdapter", "onBindViewHolder image: " + pizza.getImageUrl());
         Glide.with(holder.itemView.getContext())
                 .load(pizza.getImageUrl())
@@ -47,15 +50,18 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
     static class PizzaViewHolder extends RecyclerView.ViewHolder {
         ImageView pizzaImage;
         TextView pizzaName;
+        TextView price;
+        TextView vegetarianus;
 
         public PizzaViewHolder(@NonNull View itemView) {
             super(itemView);
             pizzaImage = itemView.findViewById(R.id.pizza_image);
             pizzaName = itemView.findViewById(R.id.pizza_name);
+            price = itemView.findViewById(R.id.price);
+            vegetarianus = itemView.findViewById(R.id.vegetarianus);
         }
     }
 
-    // 🔥 IDE JÖN AZ ÚJ METÓDUS
     public void updateList(List<Pizza> newList) {
         pizzaList.clear();
         pizzaList.addAll(newList);

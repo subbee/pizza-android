@@ -7,6 +7,7 @@ public class Pizza {
     private String nev;
     private String kategorianev;
     private boolean vegetarianus;
+    private String ar;
 
     @SerializedName("image_url")
     private String image_url;
@@ -15,6 +16,7 @@ public class Pizza {
     public int getId() { return id; }
     public String getNev() { return nev; }
     public String getKategorianev() { return kategorianev; }
-    public boolean isVegetarianus() { return vegetarianus; }
+    public String getAr() { return ar + " Ft"; }
+    public String getVegetarianus() { return vegetarianus ? "VEGA" : ""; }
     public String getImageUrl() { return image_url; }
 }

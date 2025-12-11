@@ -55,7 +55,6 @@ public class PizzaListFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                // A szűrés már gépelés közben megtörténik, itt nincs teendő
                 return false;
             }
 
@@ -78,7 +77,6 @@ public class PizzaListFragment extends Fragment {
                     fullPizzaList.clear();
                     fullPizzaList.addAll(response.body());
 
-                    // Kezdetben a teljes listát mutatjuk
                     filterPizzas("");
                 } else {
                     Toast.makeText(getContext(), "Pizza lista lekérdezése sikertelen!", Toast.LENGTH_SHORT).show();
@@ -95,7 +93,6 @@ public class PizzaListFragment extends Fragment {
     private void filterPizzas(String text) {
         List<Pizza> filteredList = new ArrayList<>();
 
-        // A teljes listából szűrünk
         for (Pizza pizza : fullPizzaList) {
             // Kis- és nagybetű érzéketlen keresés
             if (pizza.getNev().toLowerCase().contains(text.toLowerCase())) {

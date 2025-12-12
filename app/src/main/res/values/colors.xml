@@ -2,4 +2,8 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Egyedi alkalmazás színek -->
+    <color name="pizzapp_red">#ee2828</color>
+    <color name="pizzapp_white">#FFFFFF</color>
 </resources>

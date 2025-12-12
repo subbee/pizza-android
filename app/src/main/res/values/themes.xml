@@ -2,7 +2,8 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.PizzApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/pizzapp_red</item>
+        <item name="colorOnPrimary">@color/pizzapp_white</item>
     </style>
 
     <style name="Theme.PizzApp" parent="Base.Theme.PizzApp" />

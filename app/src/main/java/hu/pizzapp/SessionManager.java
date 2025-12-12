@@ -13,10 +13,8 @@ public class SessionManager {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-    private Context context;
 
     public SessionManager(Context context) {
-        this.context = context;
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
     }
@@ -34,6 +32,11 @@ public class SessionManager {
 
     public String getToken() {
         return sharedPreferences.getString(KEY_AUTH_TOKEN, null);
+    }
+
+    // Visszaadja a bejelentkezett felhasználó ID-ját, vagy -1-et, ha nincs bejelentkezve
+    public int getUserId() {
+        return sharedPreferences.getInt(KEY_USER_ID, -1);
     }
 
     public boolean isLoggedIn() {

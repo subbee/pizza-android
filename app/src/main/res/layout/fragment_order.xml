@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OrderFragment">
+
+    <!-- Csak kijelentkezett felhasználóknak látható -->
+    <TextView
+        android:id="@+id/login_warning_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A rendeléshez kérlek, jelentkezz be!"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Bejelentkezett felhasználóknak látható -->
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/order_form_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="pizza_name_order,pizza_price_order,quantity_input_layout,address_input_layout,submit_order_button" />
+
+    <TextView
+        android:id="@+id/pizza_name_order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textAppearance="?attr/textAppearanceHeadline5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Margherita" />
+
+    <TextView
+        android:id="@+id/pizza_price_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textAppearance="?attr/textAppearanceHeadline6"
+        android:textColor="?attr/colorPrimary"
+        app:layout_constraintStart_toStartOf="@+id/pizza_name_order"
+        app:layout_constraintTop_toBottomOf="@+id/pizza_name_order"
+        tools:text="3500 Ft" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/quantity_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:hint="Mennyiség"
+        app:layout_constraintEnd_toEndOf="@+id/pizza_name_order"
+        app:layout_constraintStart_toStartOf="@+id/pizza_name_order"
+        app:layout_constraintTop_toBottomOf="@+id/pizza_price_order">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/quantity_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/address_input_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Kiszállítási cím"
+        app:layout_constraintEnd_toEndOf="@+id/quantity_input_layout"
+        app:layout_constraintStart_toStartOf="@+id/quantity_input_layout"
+        app:layout_constraintTop_toBottomOf="@+id/quantity_input_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/address_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/submit_order_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Rendelés véglegesítése"
+        app:layout_constraintEnd_toEndOf="@+id/address_input_layout"
+        app:layout_constraintStart_toStartOf="@+id/address_input_layout"
+        app:layout_constraintTop_toBottomOf="@+id/address_input_layout" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

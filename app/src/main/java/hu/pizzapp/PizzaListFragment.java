@@ -27,8 +27,8 @@ public class PizzaListFragment extends Fragment {
     private PizzaAdapter pizzaAdapter;
     private SearchView searchView;
 
-    private List<Pizza> displayedPizzaList = new ArrayList<>();
-    private List<Pizza> fullPizzaList = new ArrayList<>();
+    private List<Pizza> displayedPizzaList = new ArrayList<>(); 
+    private List<Pizza> fullPizzaList = new ArrayList<>();      
 
     @Nullable
     @Override
@@ -47,7 +47,14 @@ public class PizzaListFragment extends Fragment {
     }
 
     private void setupRecyclerView() {
-        pizzaAdapter = new PizzaAdapter(displayedPizzaList);
+        pizzaAdapter = new PizzaAdapter(displayedPizzaList, pizza -> {
+            OrderFragment orderFragment = OrderFragment.newInstance(pizza.getId(), pizza.getNev(), pizza.getAr());
+
+            getParentFragmentManager().beginTransaction()
+                    .replace(R.id.fragment_container, orderFragment)
+                    .addToBackStack(null) 
+                    .commit();
+        });
         pizzaRecyclerView.setAdapter(pizzaAdapter);
     }
 
@@ -76,7 +83,6 @@ public class PizzaListFragment extends Fragment {
                 if (response.isSuccessful() && response.body() != null) {
                     fullPizzaList.clear();
                     fullPizzaList.addAll(response.body());
-
                     filterPizzas("");
                 } else {
                     Toast.makeText(getContext(), "Pizza lista lekérdezése sikertelen!", Toast.LENGTH_SHORT).show();
@@ -92,15 +98,11 @@ public class PizzaListFragment extends Fragment {
 
     private void filterPizzas(String text) {
         List<Pizza> filteredList = new ArrayList<>();
-
         for (Pizza pizza : fullPizzaList) {
-            // Kis- és nagybetű érzéketlen keresés
             if (pizza.getNev().toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(pizza);
             }
         }
-
-        // Frissítjük a megjelenített listát és értesítjük az adaptert
         displayedPizzaList.clear();
         displayedPizzaList.addAll(filteredList);
         pizzaAdapter.notifyDataSetChanged();

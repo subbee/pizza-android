@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,10 +17,16 @@ import java.util.List;
 
 public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHolder> {
 
-    private List<Pizza> pizzaList;
+    public interface OnPizzaOrderListener {
+        void onPizzaOrder(Pizza pizza);
+    }
 
-    public PizzaAdapter(List<Pizza> pizzaList) {
+    private final List<Pizza> pizzaList;
+    private final OnPizzaOrderListener orderListener;
+
+    public PizzaAdapter(List<Pizza> pizzaList, OnPizzaOrderListener orderListener) {
         this.pizzaList = pizzaList;
+        this.orderListener = orderListener;
     }
 
     @NonNull
@@ -36,10 +43,15 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
         holder.price.setText(pizza.getAr());
         holder.vegetarianus.setText(pizza.getVegetarianus());
 
-        Log.d("PizzaAdapter", "onBindViewHolder image: " + pizza.getImageUrl());
         Glide.with(holder.itemView.getContext())
                 .load(pizza.getImageUrl())
                 .into(holder.pizzaImage);
+
+        holder.orderButton.setOnClickListener(v -> {
+            if (orderListener != null) {
+                orderListener.onPizzaOrder(pizza);
+            }
+        });
     }
 
     @Override
@@ -52,6 +64,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
         TextView pizzaName;
         TextView price;
         TextView vegetarianus;
+        Button orderButton;
 
         public PizzaViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,12 +72,7 @@ public class PizzaAdapter extends RecyclerView.Adapter<PizzaAdapter.PizzaViewHol
             pizzaName = itemView.findViewById(R.id.pizza_name);
             price = itemView.findViewById(R.id.price);
             vegetarianus = itemView.findViewById(R.id.vegetarianus);
+            orderButton = itemView.findViewById(R.id.order_btn);
         }
-    }
-
-    public void updateList(List<Pizza> newList) {
-        pizzaList.clear();
-        pizzaList.addAll(newList);
-        notifyDataSetChanged();
     }
 }
